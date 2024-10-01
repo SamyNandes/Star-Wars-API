@@ -1,0 +1,117 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Wars</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <style>
+ *{
+    font-family: inter;
+ }
+ body{
+    background-image: url("ceu.jpg");
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+ #containerCompleto{    
+    display: flex;
+    text-align: center;
+    align-items: center;
+    flex-direction: column;
+ }
+ #containerCompleto1{
+    background-color: rgba(184, 184, 184, 0.842);
+    display: flex;
+    text-align: center;
+    border-radius: 2%;
+    align-items: center;
+    padding: 15px;
+    flex-direction: column;
+ }
+#containerCompleto1 h2{
+    margin: 20px;
+    color: black;
+}
+ #container{
+    width: 500px;
+    display: flex;
+    justify-content: center;
+}
+ #container h1{
+    font-size: 30px;
+ }
+ button{
+    margin: 0px 15px 20px;  
+ }
+ input{
+    margin: 15px;
+ }
+.cor{
+    color: #161674 ;
+}
+table{
+    border-radius: 5px;
+    font-size: 25px;
+}
+    </style>
+    <script>   
+        async function buscarDados(nome){
+            const dadosBruto = await fetch('https://swapi.dev/api/people/')
+            const dadosAfavel = await dadosBruto.json()
+            const resultadoDaPesquisa = await dadosAfavel.results
+            resultadoDaPesquisa.forEach(variavel => {
+                if(variavel.name == nome){
+                    const container = document.getElementById('container')
+                    container.innerHTML = `
+                        <table>
+                        <tr>
+                            <td><b style="color: black;">Nome: </b> ${variavel.name} </td>
+                        </tr>    
+                        <tr>
+                            <td><b style="color: black;">Ano de nascimento: </b>${variavel.birth_year}</td>
+                        </tr>
+                        <tr>
+                            <td><b style="color: black;">Altura: </b> ${variavel.height}</td>
+                        </tr>
+                        <tr>
+                            <td><b style="color: black;">Gênero: </b>  ${variavel.gender}</td>
+                        </tr>
+                        <tr>
+                            <td><b style="color: black;">Cor do cabelo: </b> ${variavel.hair_color}</td>
+                        </tr>
+                        </table>
+                    `
+                }
+            })
+        }
+        function buscarPersonagem(){
+            const valor = document.getElementById('floatingInput').value
+            if(valor == ""){
+                console.log("Digite um nome!")
+            } else{
+                buscarDados(valor)
+            }
+        }
+    </script>
+</head>
+<body>
+    
+    <div id="containerCompleto">
+        <div id="containerCompleto1">
+            <h2>Digite o nome do seu personagem: </h2>
+            <label for="floatingInput">Nome do seu personagem ↓</label>
+            <input type="email" class="form-control" id="floatingInput" placeholder="Luke Skywalker">
+            <button class="btn btn-primary" onclick="buscarPersonagem()">Buscar personagem</button>
+            <div id="container" class="container"></div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+</body>
+</html>
